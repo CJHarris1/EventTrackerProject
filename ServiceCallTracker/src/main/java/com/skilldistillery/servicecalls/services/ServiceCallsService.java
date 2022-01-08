@@ -1,14 +1,21 @@
 package com.skilldistillery.servicecalls.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.skilldistillery.servicecalls.entities.ServiceCall;
 
 public interface ServiceCallsService {
 
-	List<ServiceCall> getAllCustomers();
+	List<ServiceCall> getAllServiceCalls();
 	
-	ServiceCall getCustomerById();
+	ServiceCall getServiceCallByDateScheduled(LocalDate date);
 	
-	ServiceCall createNewCustomer();
+	ServiceCall getServiceCallByDateCalled(LocalDate date);
+	
+	ServiceCall createNewServiceCall(int scId, ServiceCall sc);
+	
+	ServiceCall updateServiceCall(int scId, ServiceCall sc);
+	
+	boolean deleteServiceCall(int scId);
 }

@@ -2,6 +2,7 @@ package com.skilldistillery.servicecalls.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -49,7 +50,13 @@ private static EntityManagerFactory emf;
 		assertEquals("62 Fake St.", address.getAddress());
 		assertEquals("Hanover", address.getCity());
 		assertEquals("PA", address.getStateAbbv());
-		
+	}
+	
+	@Test
+	void test_address_to_service_call_mapping() {
+		assertNotNull(address);
+		assertNotNull(address.getServiceCalls());
+		assertTrue(address.getServiceCalls().size() > 0);
 	}
 
 }

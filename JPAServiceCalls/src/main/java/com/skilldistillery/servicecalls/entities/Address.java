@@ -1,5 +1,6 @@
 package com.skilldistillery.servicecalls.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -7,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Address {
@@ -22,8 +26,12 @@ public class Address {
 	@Column(name = "state_abbv")
 	private String stateAbbv;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "address")
+	private List<ServiceCall> serviceCalls;
+	
 	public Address() {}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -54,6 +62,14 @@ public class Address {
 
 	public void setStateAbbv(String stateAbbv) {
 		this.stateAbbv = stateAbbv;
+	}
+
+	public List<ServiceCall> getServiceCalls() {
+		return serviceCalls;
+	}
+
+	public void setServiceCalls(List<ServiceCall> serviceCalls) {
+		this.serviceCalls = serviceCalls;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.skilldistillery.servicecalls.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -7,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Customer {
@@ -28,11 +32,17 @@ public class Customer {
 	private String lastName2;
 	
 	@Column(name = "phone_number")
-	private long phoneNumber;
+	private String phoneNumber;
 	
 	@Column(name = "phone_number2")
-	private long phoneNumber2;
-
+	private String phoneNumber2;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
+	private List<ServiceCall> serviceCalls;
+	
+	public Customer() {}
+	
 	public int getId() {
 		return id;
 	}
@@ -73,20 +83,28 @@ public class Customer {
 		this.lastName2 = lastName2;
 	}
 
-	public long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(long phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public long getPhoneNumber2() {
+	public String getPhoneNumber2() {
 		return phoneNumber2;
 	}
 
-	public void setPhoneNumber2(long phoneNumber2) {
+	public void setPhoneNumber2(String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
+	}
+
+	public List<ServiceCall> getServiceCalls() {
+		return serviceCalls;
+	}
+
+	public void setServiceCalls(List<ServiceCall> serviceCalls) {
+		this.serviceCalls = serviceCalls;
 	}
 
 	@Override

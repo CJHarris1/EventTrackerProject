@@ -49,5 +49,12 @@ private static EntityManagerFactory emf;
 		assertEquals("Doe", cust.getLastName());
 		assertEquals(1231231212, cust.getPhoneNumber());
 	}
+	
+	@Test
+	void test_customer_to_service_calls_mapping() {
+		assertNotNull(cust);
+		assertNotNull(cust.getServiceCalls());
+		assertTrue(cust.getServiceCalls().size() > 0);
+	}
 
 }

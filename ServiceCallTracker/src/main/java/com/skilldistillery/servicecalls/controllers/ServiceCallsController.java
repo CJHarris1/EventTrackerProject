@@ -18,8 +18,8 @@ public class ServiceCallsController {
 	private ServiceCallsService scService;
 	
 	
-	@GetMapping("customers")
+	@GetMapping("servicecalls")
 	public List<ServiceCall> index(){
-		return scService.getAllCustomers();
+		return scService.getAllServiceCalls();
 	}
 }
