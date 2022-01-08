@@ -1,7 +1,6 @@
 package com.skilldistillery.servicecalls.repositories;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +13,5 @@ public interface ServiceCallsRepository extends JpaRepository<ServiceCall, Integ
 	
 	List<ServiceCall> findByDateCalled(LocalDate date);
 	
-	ServiceCall findByDateScheduledAndTimeSlot(LocalDate date, LocalTime time);
+	ServiceCall findByDateScheduledAndTimeSlot(LocalDate date, int time);
 }

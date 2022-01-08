@@ -1,7 +1,6 @@
 package com.skilldistillery.servicecalls.entities;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -30,7 +29,9 @@ public class ServiceCall {
 	private LocalDate dateScheduled;
 	
 	@Column(name = "time_slot")
-	private LocalTime timeSlot;
+	private int timeSlot;
+	
+	private boolean active;
 	
 	@ManyToOne
 	@JoinColumn(name = "address_id")
@@ -39,8 +40,6 @@ public class ServiceCall {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
-	private boolean active;
 	
 	public ServiceCall() {}
 
@@ -76,12 +75,20 @@ public class ServiceCall {
 		this.dateScheduled = dateScheduled;
 	}
 
-	public LocalTime getTimeSlot() {
+	public int getTimeSlot() {
 		return timeSlot;
 	}
 
-	public void setTimeSlot(LocalTime timeSlot) {
+	public void setTimeSlot(int timeSlot) {
 		this.timeSlot = timeSlot;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public Address getAddress() {
@@ -98,14 +105,6 @@ public class ServiceCall {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 
 	@Override

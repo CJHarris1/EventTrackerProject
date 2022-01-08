@@ -1,12 +1,13 @@
 package com.skilldistillery.servicecalls.services;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.servicecalls.entities.Address;
+import com.skilldistillery.servicecalls.entities.Customer;
 import com.skilldistillery.servicecalls.entities.ServiceCall;
 import com.skilldistillery.servicecalls.repositories.ServiceCallsRepository;
 
@@ -22,12 +23,12 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	}
 
 	@Override
-	public List<ServiceCall> getServiceCallByDateScheduled(LocalDate date) {
+	public List<ServiceCall> getServiceCallsByDateScheduled(LocalDate date) {
 		return scRepo.findByDateScheduled(date);
 	}
 
 	@Override
-	public List<ServiceCall> getServiceCallByDateCalled(LocalDate date) {
+	public List<ServiceCall> getServiceCallsByDateCalled(LocalDate date) {
 		return scRepo.findByDateCalled(date);
 	}
 
@@ -44,25 +45,25 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	}
 
 	@Override
-	public boolean deleteServiceCall(int scId) {
-		// TODO Auto-generated method stub
-		return false;
+	public ServiceCall deleteServiceCall(int scId) {
+		ServiceCall call = scRepo.findById(scId).get();
+		call.setActive(false);
+		return call;
 	}
 
 	@Override
-	public ServiceCall getServiceCallByDateAndTime(LocalDate date, LocalTime time) {
+	public ServiceCall getServiceCallByDateAndTime(LocalDate date, int time) {
+		return scRepo.findByDateScheduledAndTimeSlot(date, time);
+	}
+
+	@Override
+	public List<ServiceCall> getServiceCallsByCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ServiceCall> getServiceCallByCustomerId(int custId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ServiceCall> getServiceCallByAddressId(int addrId) {
+	public List<ServiceCall> getServiceCallsByAddress(Address address) {
 		// TODO Auto-generated method stub
 		return null;
 	}
