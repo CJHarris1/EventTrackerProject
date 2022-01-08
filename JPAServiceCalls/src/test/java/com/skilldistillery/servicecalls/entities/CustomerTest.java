@@ -47,7 +47,7 @@ private static EntityManagerFactory emf;
 		assertNotNull(cust);
 		assertEquals("John", cust.getFirstName());
 		assertEquals("Doe", cust.getLastName());
-		assertEquals(1231231212, cust.getPhoneNumber());
+		assertEquals("1231231212", cust.getPhoneNumber());
 	}
 	
 	@Test
@@ -55,6 +55,13 @@ private static EntityManagerFactory emf;
 		assertNotNull(cust);
 		assertNotNull(cust.getServiceCalls());
 		assertTrue(cust.getServiceCalls().size() > 0);
+	}
+	
+	@Test
+	void test_customer_to_address_mapping() {
+		assertNotNull(cust);
+		assertNotNull(cust.getAddresses());
+		assertTrue(cust.getAddresses().size() > 0);
 	}
 
 }

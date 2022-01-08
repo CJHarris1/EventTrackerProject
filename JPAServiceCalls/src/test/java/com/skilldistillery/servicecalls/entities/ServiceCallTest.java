@@ -53,8 +53,5 @@ class ServiceCallTest {
 		assertEquals(2022, call.getDateCalled().getYear());
 		assertEquals(01, call.getDateCalled().getMonthValue());
 		assertEquals(01, call.getDateCalled().getDayOfMonth());
-		//assertEquals(08:00:00, call.getTimeSlot());
-		
 	}
-
 }

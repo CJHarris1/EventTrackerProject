@@ -41,6 +41,10 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<ServiceCall> serviceCalls;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer")
+	private List<Address> addresses;
+	
 	public Customer() {}
 	
 	public int getId() {
@@ -105,6 +109,14 @@ public class Customer {
 
 	public void setServiceCalls(List<ServiceCall> serviceCalls) {
 		this.serviceCalls = serviceCalls;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 
 	@Override
