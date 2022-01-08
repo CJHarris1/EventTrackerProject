@@ -1,6 +1,7 @@
 package com.skilldistillery.servicecalls.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,13 +13,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CustomerTest {
+class AddressTest {
 
 private static EntityManagerFactory emf;
 	
 	private EntityManager em;
 	
-	private Customer cust;
+	private Address address;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,21 +34,22 @@ private static EntityManagerFactory emf;
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		cust = em.find(Customer.class, 1);
+		address = em.find(Address.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		cust = null;
+		address = null;
 	}
 
 	@Test
-	void test_customer_mapping() {
-		assertNotNull(cust);
-		assertEquals("John", cust.getFirstName());
-		assertEquals("Doe", cust.getLastName());
-		assertEquals(1231231212, cust.getPhoneNumber());
+	void test_address_mapping() {
+		assertNotNull(address);
+		assertEquals("62 Fake St.", address.getAddress());
+		assertEquals("Hanover", address.getCity());
+		assertEquals("PA", address.getStateAbbv());
+		
 	}
 
 }

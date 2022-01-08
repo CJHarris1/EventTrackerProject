@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.servicecalls.entities.Customer;
+import com.skilldistillery.servicecalls.entities.ServiceCall;
 import com.skilldistillery.servicecalls.services.ServiceCallsService;
 
 @RestController
@@ -19,7 +19,7 @@ public class ServiceCallsController {
 	
 	
 	@GetMapping("customers")
-	public List<Customer> index(){
+	public List<ServiceCall> index(){
 		return scService.getAllCustomers();
 	}
 }

@@ -2,13 +2,13 @@ package com.skilldistillery.servicecalls.services;
 
 import java.util.List;
 
-import com.skilldistillery.servicecalls.entities.Customer;
+import com.skilldistillery.servicecalls.entities.ServiceCall;
 
 public interface ServiceCallsService {
 
-	List<Customer> getAllCustomers();
+	List<ServiceCall> getAllCustomers();
 	
-	Customer getCustomerById();
+	ServiceCall getCustomerById();
 	
-	Customer createNewCustomer();
+	ServiceCall createNewCustomer();
 }

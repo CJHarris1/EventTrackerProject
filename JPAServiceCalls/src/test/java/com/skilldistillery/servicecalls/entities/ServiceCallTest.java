@@ -1,6 +1,7 @@
 package com.skilldistillery.servicecalls.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,13 +13,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CustomerTest {
-
-private static EntityManagerFactory emf;
+class ServiceCallTest {
+	
+	private static EntityManagerFactory emf;
 	
 	private EntityManager em;
 	
-	private Customer cust;
+	private ServiceCall call;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,21 +34,27 @@ private static EntityManagerFactory emf;
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		cust = em.find(Customer.class, 1);
+		call = em.find(ServiceCall.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		cust = null;
+		call = null;
 	}
 
 	@Test
-	void test_customer_mapping() {
-		assertNotNull(cust);
-		assertEquals("John", cust.getFirstName());
-		assertEquals("Doe", cust.getLastName());
-		assertEquals(1231231212, cust.getPhoneNumber());
+	void test_service_call_mapping() {
+		assertNotNull(call);
+		assertEquals("No heat", call.getDescription());
+		assertEquals(2022, call.getDateScheduled().getYear());
+		assertEquals(01, call.getDateScheduled().getMonthValue());
+		assertEquals(02, call.getDateScheduled().getDayOfMonth());
+		assertEquals(2022, call.getDateCalled().getYear());
+		assertEquals(01, call.getDateCalled().getMonthValue());
+		assertEquals(01, call.getDateCalled().getDayOfMonth());
+		//assertEquals(08:00:00, call.getTimeSlot());
+		
 	}
 
 }

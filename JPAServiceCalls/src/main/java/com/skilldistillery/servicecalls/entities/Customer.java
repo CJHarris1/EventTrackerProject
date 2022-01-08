@@ -15,18 +15,23 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String fname;
+	@Column(name = "first_name")
+	private String firstName;
 	
-	private String lname;
+	@Column(name = "last_name")
+	private String lastName;
 	
-	private String address;
+	@Column(name = "first_name2")
+	private String firstName2;
 	
-	private String city;
+	@Column(name = "last_name2")
+	private String lastName2;
 	
-	@Column(name = "state_abbv")
-	private String stateAbbv;
+	@Column(name = "phone_number")
+	private long phoneNumber;
 	
-	public Customer() {}
+	@Column(name = "phone_number2")
+	private long phoneNumber2;
 
 	public int getId() {
 		return id;
@@ -36,44 +41,52 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getFname() {
-		return fname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFname(String fname) {
-		this.fname = fname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLname() {
-		return lname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLname(String lname) {
-		this.lname = lname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getFirstName2() {
+		return firstName2;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setFirstName2(String firstName2) {
+		this.firstName2 = firstName2;
 	}
 
-	public String getCity() {
-		return city;
+	public String getLastName2() {
+		return lastName2;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setLastName2(String lastName2) {
+		this.lastName2 = lastName2;
 	}
 
-	public String getStateAbbv() {
-		return stateAbbv;
+	public long getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setStateAbbv(String stateAbbv) {
-		this.stateAbbv = stateAbbv;
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public long getPhoneNumber2() {
+		return phoneNumber2;
+	}
+
+	public void setPhoneNumber2(long phoneNumber2) {
+		this.phoneNumber2 = phoneNumber2;
 	}
 
 	@Override
@@ -95,10 +108,10 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", fname=" + fname + ", lname=" + lname + ", address=" + address + ", city="
-				+ city + ", stateAbbv=" + stateAbbv + "]";
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", firstName2="
+				+ firstName2 + ", lastName2=" + lastName2 + ", phoneNumber=" + phoneNumber + ", phoneNumber2="
+				+ phoneNumber2 + "]";
 	}
-
 	
 	
 	
