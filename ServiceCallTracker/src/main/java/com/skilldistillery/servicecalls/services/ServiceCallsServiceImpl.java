@@ -1,6 +1,7 @@
 package com.skilldistillery.servicecalls.services;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +22,18 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	}
 
 	@Override
-	public ServiceCall getServiceCallByDateScheduled(LocalDate date) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ServiceCall> getServiceCallByDateScheduled(LocalDate date) {
+		return scRepo.findByDateScheduled(date);
 	}
 
 	@Override
-	public ServiceCall getServiceCallByDateCalled(LocalDate date) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ServiceCall> getServiceCallByDateCalled(LocalDate date) {
+		return scRepo.findByDateCalled(date);
 	}
 
 	@Override
 	public ServiceCall createNewServiceCall(int scId, ServiceCall sc) {
-		// TODO Auto-generated method stub
+		//will need to create new customer, the address, then service call
 		return null;
 	}
 
@@ -48,6 +47,24 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	public boolean deleteServiceCall(int scId) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ServiceCall getServiceCallByDateAndTime(LocalDate date, LocalTime time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ServiceCall> getServiceCallByCustomerId(int custId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ServiceCall> getServiceCallByAddressId(int addrId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

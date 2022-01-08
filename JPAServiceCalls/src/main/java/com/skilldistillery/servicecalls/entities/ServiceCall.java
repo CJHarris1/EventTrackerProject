@@ -40,6 +40,8 @@ public class ServiceCall {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
+	private boolean active;
+	
 	public ServiceCall() {}
 
 	public int getId() {
@@ -98,6 +100,14 @@ public class ServiceCall {
 		this.customer = customer;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -118,7 +128,7 @@ public class ServiceCall {
 	@Override
 	public String toString() {
 		return "ServiceCall [id=" + id + ", description=" + description + ", dateCalled=" + dateCalled
-				+ ", dateScheduled=" + dateScheduled + ", timeSlot=" + timeSlot + "]";
+				+ ", dateScheduled=" + dateScheduled + ", timeSlot=" + timeSlot + ", active=" + active + "]";
 	}
 
 	

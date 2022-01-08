@@ -1,9 +1,12 @@
 package com.skilldistillery.servicecalls.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +22,18 @@ public class ServiceCallsController {
 	
 	
 	@GetMapping("servicecalls")
-	public List<ServiceCall> index(){
+	public List<ServiceCall> getAllCalls(){
 		return scService.getAllServiceCalls();
+	}
+	
+	        
+	@GetMapping("servicecalls/datescheduled/{date}")
+	public List<ServiceCall> getCallByDateScheduled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
+		return scService.getServiceCallByDateScheduled(date);
+	}
+	
+	@GetMapping("servicecalls/datecalled/{date}")
+	public List<ServiceCall> getCallByDateCalled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+		return scService.getServiceCallByDateCalled(date);
 	}
 }
