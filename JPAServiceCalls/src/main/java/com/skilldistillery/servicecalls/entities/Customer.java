@@ -25,17 +25,8 @@ public class Customer {
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "first_name2")
-	private String firstName2;
-	
-	@Column(name = "last_name2")
-	private String lastName2;
-	
 	@Column(name = "phone_number")
 	private String phoneNumber;
-	
-	@Column(name = "phone_number2")
-	private String phoneNumber2;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
@@ -71,21 +62,6 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public String getFirstName2() {
-		return firstName2;
-	}
-
-	public void setFirstName2(String firstName2) {
-		this.firstName2 = firstName2;
-	}
-
-	public String getLastName2() {
-		return lastName2;
-	}
-
-	public void setLastName2(String lastName2) {
-		this.lastName2 = lastName2;
-	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -93,14 +69,6 @@ public class Customer {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public String getPhoneNumber2() {
-		return phoneNumber2;
-	}
-
-	public void setPhoneNumber2(String phoneNumber2) {
-		this.phoneNumber2 = phoneNumber2;
 	}
 
 	public List<ServiceCall> getServiceCalls() {
@@ -138,9 +106,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", firstName2="
-				+ firstName2 + ", lastName2=" + lastName2 + ", phoneNumber=" + phoneNumber + ", phoneNumber2="
-				+ phoneNumber2 + "]";
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber="
+				+ phoneNumber + "]";
 	}
 	
 	

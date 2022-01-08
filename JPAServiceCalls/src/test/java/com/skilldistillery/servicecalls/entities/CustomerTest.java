@@ -47,7 +47,7 @@ private static EntityManagerFactory emf;
 		assertNotNull(cust);
 		assertEquals("John", cust.getFirstName());
 		assertEquals("Doe", cust.getLastName());
-		assertEquals("1231231212", cust.getPhoneNumber());
+		assertEquals("1231231111", cust.getPhoneNumber());
 	}
 	
 	@Test
