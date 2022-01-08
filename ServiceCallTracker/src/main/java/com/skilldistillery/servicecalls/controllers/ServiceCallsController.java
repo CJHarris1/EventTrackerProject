@@ -21,13 +21,11 @@ public class ServiceCallsController {
 	@Autowired
 	private ServiceCallsService scService;
 	
-	
 	@GetMapping("servicecalls")
 	public List<ServiceCall> getAllCalls(){
 		return scService.getAllServiceCalls();
 	}
 	
-	        
 	@GetMapping("servicecalls/datescheduled/{date}")
 	public List<ServiceCall> getCallByDateScheduled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
 		return scService.getServiceCallsByDateScheduled(date);
