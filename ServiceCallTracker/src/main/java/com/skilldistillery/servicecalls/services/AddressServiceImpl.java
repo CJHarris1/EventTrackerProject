@@ -42,7 +42,9 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public Address updateAddress(int addrId, Address address) {
-		// TODO Auto-generated method stub
+		if(addrRepo.existsById(addrId)) {
+			return addrRepo.save(address);
+		}
 		return null;
 	}
 

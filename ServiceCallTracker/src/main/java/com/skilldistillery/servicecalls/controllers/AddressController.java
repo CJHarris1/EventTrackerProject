@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,11 @@ public class AddressController {
 
 	@Autowired
 	private AddressService addrServ;
+	
+	@GetMapping("address")
+	public List<Address> getAllAddresses(){
+		return addrServ.getAllAddresses();
+	}
 	
 	@GetMapping("address/city/{city}")
 	public List<Address> getAddressByCity(@PathVariable String city, HttpServletResponse res) {
@@ -67,7 +73,20 @@ public class AddressController {
 		return addr;
 	}
 	
-	
+	@PutMapping("address/{addrId}")
+	public Address updateAddress(@PathVariable int addrId, HttpServletResponse res, @RequestBody Address addr) {
+		try {
+			addr = addrServ.updateAddress(addrId, addr);
+			if(addr == null) {
+				res.setStatus(404);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+			addr = null;
+		}
+		return addr;
+	}
 	
 	
 }
