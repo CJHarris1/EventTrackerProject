@@ -5,6 +5,8 @@ This project is something that filled a void when I was working for my fathers H
 
 The backend is set up in a way that CRUD (create, read, update, delete) functions can be applied to the customer, address, the equipment inside of the house, and the service calls themselves. While we can delete the actual equipment in a scenario that it is replaced and no longer at the address, the rest of the information will be set as active or not active. We would always keep service call records even after completion so that they can be easily referenced back to when the customer calls again.
 
+![servicecallsdb](https://user-images.githubusercontent.com/88620365/148706305-c6377723-84d4-490a-85dd-e857ecbae119.png)
+
 ## REST API Reference
 |  Return Type       |  HTTP Method  |         URI                           |  Request Body  |  Purpose  |
 |--------------------|---------------|---------------------------------------|----------------|-----------|
