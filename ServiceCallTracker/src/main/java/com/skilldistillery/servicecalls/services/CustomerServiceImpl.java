@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.skilldistillery.servicecalls.entities.Address;
 import com.skilldistillery.servicecalls.entities.Customer;
 import com.skilldistillery.servicecalls.repositories.CustomerRepository;
 
@@ -49,10 +48,5 @@ public class CustomerServiceImpl implements CustomerService{
 		return custRepo.findByPhoneNumber(phoneNumber);
 	}
 
-	@Override
-	public Customer getCustomerByAddress(Address address) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

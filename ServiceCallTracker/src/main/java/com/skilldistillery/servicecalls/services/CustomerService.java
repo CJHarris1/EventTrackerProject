@@ -2,7 +2,6 @@ package com.skilldistillery.servicecalls.services;
 
 import java.util.List;
 
-import com.skilldistillery.servicecalls.entities.Address;
 import com.skilldistillery.servicecalls.entities.Customer;
 
 public interface CustomerService {
@@ -19,6 +18,5 @@ public interface CustomerService {
 	
 	Customer getCustomerPhoneNumber(String phoneNumber);
 	
-	Customer getCustomerByAddress(Address address);
 
 }
