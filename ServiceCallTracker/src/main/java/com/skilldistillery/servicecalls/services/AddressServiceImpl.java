@@ -20,11 +20,6 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
-	public Address getAddressByStreetAddress(String street) {
-		return addrRepo.findByAddress(street);
-	}
-
-	@Override
 	public List<Address> getAddressByCity(String city) {
 		return addrRepo.findByCity(city);
 	}
@@ -35,14 +30,14 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
-	public Address getAddressByCustomer(int custId) {
+	public List<Address> getAddressByCustomer(int custId) {
 		return addrRepo.findByCustomerId(custId);
 	}
 
 	@Override
-	public Address createNewAddress(int addrId, Address address) {
-		// TODO Auto-generated method stub
-		return null;
+	public Address createNewAddress(Address address) {
+		addrRepo.saveAndFlush(address);
+		return address;
 	}
 
 	@Override

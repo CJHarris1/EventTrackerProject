@@ -8,15 +8,13 @@ public interface AddressService {
 	
 	List<Address> getAllAddresses();
 	
-	Address getAddressByStreetAddress(String street);
-	
 	List<Address> getAddressByCity(String city);
 	
 	List<Address> getAddressByStateAbbv(String stateAbbv);
 	
-	Address getAddressByCustomer(int custId);
+	List<Address> getAddressByCustomer(int custId);
 	
-	Address createNewAddress(int addrId, Address address);
+	Address createNewAddress(Address address);
 	
 	Address updateAddress(int addrId, Address address);
 

@@ -28,7 +28,7 @@ public class EquipmentController {
 	@GetMapping("equipment/{addrId}")
 	public List<Equipment> getEquipmentByAddress(@PathVariable int addrId, HttpServletResponse res){
 		List<Equipment> equip = equipServ.getEquipmentByAddress(addrId);
-		if(equip == null) {
+		if(equip.size() == 0) {
 			res.setStatus(400);
 		}
 		return equip;

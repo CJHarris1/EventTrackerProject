@@ -8,11 +8,9 @@ import com.skilldistillery.servicecalls.entities.Address;
 
 public interface AddressRepository extends JpaRepository<Address, Integer>{
 
-	Address findByAddress(String street);
-	
 	List<Address> findByCity(String city);
 	
 	List<Address> findByStateAbbv(String stateAbbv);
 	
-	Address findByCustomerId(int custId);
+	List<Address> findByCustomerId(int custId);
 }
