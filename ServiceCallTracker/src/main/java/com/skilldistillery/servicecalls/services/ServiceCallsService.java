@@ -19,9 +19,5 @@ public interface ServiceCallsService {
 	
 	ServiceCall deleteServiceCall(int scId);
 	
-	ServiceCall getServiceCallByDateAndTime(LocalDate date, int time);
-	
-	List<ServiceCall> getServiceCallsByCustomer(int custId);
-	
 	List<ServiceCall> getServiceCallsByAddress(int addrId);
 }

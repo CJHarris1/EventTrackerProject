@@ -34,7 +34,7 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	public ServiceCall createNewServiceCall(ServiceCall sc) {
 		//will need to create new customer, the address, then service call
 		scRepo.saveAndFlush(sc);
-		return null;
+		return sc;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 		if(scRepo.existsById(scId)) {
 			return scRepo.save(sc);
 		}
-		return null;
+		return sc;
 	}
 
 	@Override
@@ -61,18 +61,7 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	}
 
 	@Override
-	public ServiceCall getServiceCallByDateAndTime(LocalDate date, int time) {
-		return scRepo.findByDateScheduledAndTimeSlot(date, time);
-	}
-
-	@Override
-	public List<ServiceCall> getServiceCallsByCustomer(int custId) {
-		return scRepo.findByCustomer_Id(custId);
-	}
-
-	@Override
 	public List<ServiceCall> getServiceCallsByAddress(int addrId) {
 		return scRepo.findByAddress_Id(addrId);
 	}
-
 }

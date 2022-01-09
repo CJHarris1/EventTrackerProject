@@ -37,9 +37,7 @@ public class ServiceCall {
 	@JoinColumn(name = "address_id")
 	private Address address;
 	
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
+
 	
 	public ServiceCall() {}
 
@@ -97,14 +95,6 @@ public class ServiceCall {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
 	}
 
 	@Override

@@ -30,10 +30,6 @@ public class Customer {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
-	private List<ServiceCall> serviceCalls;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "customer")
 	private List<Address> addresses;
 	
 	public Customer() {}
@@ -69,14 +65,6 @@ public class Customer {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public List<ServiceCall> getServiceCalls() {
-		return serviceCalls;
-	}
-
-	public void setServiceCalls(List<ServiceCall> serviceCalls) {
-		this.serviceCalls = serviceCalls;
 	}
 
 	public List<Address> getAddresses() {

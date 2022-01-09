@@ -32,13 +32,21 @@ public class ServiceCallsController {
 	}
 	
 	@GetMapping("servicecalls/datescheduled/{date}")
-	public List<ServiceCall> getCallByDateScheduled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date){
-		return scService.getServiceCallsByDateScheduled(date);
+	public List<ServiceCall> getCallByDateScheduled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date, HttpServletResponse res){
+		List<ServiceCall> calls = scService.getServiceCallsByDateScheduled(date);
+		if(calls.size() == 0) {
+			res.setStatus(400);
+		}
+		return calls;
 	}
 	
 	@GetMapping("servicecalls/datecalled/{date}")
-	public List<ServiceCall> getCallByDateCalled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-		return scService.getServiceCallsByDateCalled(date);
+	public List<ServiceCall> getCallByDateCalled(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, HttpServletResponse res){
+		List<ServiceCall> calls = scService.getServiceCallsByDateCalled(date);
+		if(calls.size() == 0) {
+			res.setStatus(400);
+		}
+		return calls;
 	}
 	
 	@PostMapping("servicecalls")
@@ -82,19 +90,12 @@ public class ServiceCallsController {
 		return sc;
 	}
 	
-	@GetMapping("servicecalls/datescheduled/{date}/time/{time}")
-	public ServiceCall getCallByDateScheduledAndTime(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date,
-													 @PathVariable int time) {
-		return scService.getServiceCallByDateAndTime(date, time);
-	}
-	
-	@GetMapping("servicecalls/customer/{custId}")
-	public List<ServiceCall> getCallByCustomerId(@PathVariable int custId) {
-		return scService.getServiceCallsByCustomer(custId);
-	}
-	
 	@GetMapping("servicecalls/address/{addrId}")
-	public List<ServiceCall> getCallByAddressId(@PathVariable int addrId){
-		return scService.getServiceCallsByAddress(addrId);
+	public List<ServiceCall> getCallByAddressId(@PathVariable int addrId, HttpServletResponse res){
+		List<ServiceCall> calls = scService.getServiceCallsByAddress(addrId);
+		if(calls.size() == 0) {
+			res.setStatus(400);
+		}
+		return calls;
 	}
 }

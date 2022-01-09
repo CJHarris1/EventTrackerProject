@@ -51,13 +51,6 @@ private static EntityManagerFactory emf;
 	}
 	
 	@Test
-	void test_customer_to_service_calls_mapping() {
-		assertNotNull(cust);
-		assertNotNull(cust.getServiceCalls());
-		assertTrue(cust.getServiceCalls().size() > 0);
-	}
-	
-	@Test
 	void test_customer_to_address_mapping() {
 		assertNotNull(cust);
 		assertNotNull(cust.getAddresses());
