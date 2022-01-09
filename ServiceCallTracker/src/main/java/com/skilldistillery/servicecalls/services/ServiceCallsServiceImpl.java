@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.skilldistillery.servicecalls.entities.Address;
-import com.skilldistillery.servicecalls.entities.Customer;
 import com.skilldistillery.servicecalls.entities.ServiceCall;
 import com.skilldistillery.servicecalls.repositories.ServiceCallsRepository;
 
@@ -33,21 +31,32 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	}
 
 	@Override
-	public ServiceCall createNewServiceCall(int scId, ServiceCall sc) {
+	public ServiceCall createNewServiceCall(ServiceCall sc) {
 		//will need to create new customer, the address, then service call
+		scRepo.saveAndFlush(sc);
 		return null;
 	}
 
 	@Override
 	public ServiceCall updateServiceCall(int scId, ServiceCall sc) {
-		// TODO Auto-generated method stub
+		sc.setId(scId);
+		if(scRepo.existsById(scId)) {
+			return scRepo.save(sc);
+		}
 		return null;
 	}
 
 	@Override
 	public ServiceCall deleteServiceCall(int scId) {
-		ServiceCall call = scRepo.findById(scId).get();
-		call.setActive(false);
+		ServiceCall call;
+		try {
+			call = scRepo.findById(scId).get();
+			call.setActive(false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("invalid service call id");
+			call = null;
+		}
 		return call;
 	}
 
@@ -57,15 +66,13 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	}
 
 	@Override
-	public List<ServiceCall> getServiceCallsByCustomer(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ServiceCall> getServiceCallsByCustomer(int custId) {
+		return scRepo.findByCustomer_Id(custId);
 	}
 
 	@Override
-	public List<ServiceCall> getServiceCallsByAddress(Address address) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ServiceCall> getServiceCallsByAddress(int addrId) {
+		return scRepo.findByAddress_id(addrId);
 	}
 
 }
