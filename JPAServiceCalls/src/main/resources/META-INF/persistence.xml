@@ -4,9 +4,10 @@
 	
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     
-		<class>com.skilldistillery.servicecalls.entities.Customer</class>
-		<class>com.skilldistillery.servicecalls.entities.ServiceCall</class>
 		<class>com.skilldistillery.servicecalls.entities.Address</class>
+		<class>com.skilldistillery.servicecalls.entities.Customer</class>
+		<class>com.skilldistillery.servicecalls.entities.Equipment</class>
+		<class>com.skilldistillery.servicecalls.entities.ServiceCall</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/servicecallsdb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=US/Mountain" />

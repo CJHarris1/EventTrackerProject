@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 class AddressTest {
 
-private static EntityManagerFactory emf;
+	private static EntityManagerFactory emf;
 	
 	private EntityManager em;
 	
@@ -57,6 +57,13 @@ private static EntityManagerFactory emf;
 		assertNotNull(address);
 		assertNotNull(address.getServiceCalls());
 		assertTrue(address.getServiceCalls().size() > 0);
+	}
+	
+	@Test
+	void test_address_to_equipment_mapping() {
+		assertNotNull(address);
+		assertNotNull(address.getEquipment());
+		assertTrue(address.getEquipment().size() > 0);
 	}
 
 }

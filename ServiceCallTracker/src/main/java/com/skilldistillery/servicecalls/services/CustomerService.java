@@ -9,7 +9,7 @@ public interface CustomerService {
 	
 	List<Customer> getAllCustomers();
 	
-	Customer createNewCustomer(int custId, Customer cust);
+	Customer createNewCustomer(Customer cust);
 	
 	Customer updateCustomer(int custId, Customer cust);
 	

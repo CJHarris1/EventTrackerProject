@@ -21,14 +21,16 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Customer createNewCustomer(int custId, Customer cust) {
-		// TODO Auto-generated method stub
-		return null;
+	public Customer createNewCustomer(Customer cust) {
+		return custRepo.saveAndFlush(cust);
 	}
 
 	@Override
 	public Customer updateCustomer(int custId, Customer cust) {
-		// TODO Auto-generated method stub
+		cust.setId(custId);
+		if(custRepo.existsById(custId)) {
+			return custRepo.save(cust);
+		}
 		return null;
 	}
 

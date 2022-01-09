@@ -36,6 +36,10 @@ public class Address {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "address")
+	private List<Equipment> equipment;
+	
 	public Address() {}
 	
 	public int getId() {
@@ -84,6 +88,14 @@ public class Address {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public List<Equipment> getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(List<Equipment> equipment) {
+		this.equipment = equipment;
 	}
 
 	@Override
