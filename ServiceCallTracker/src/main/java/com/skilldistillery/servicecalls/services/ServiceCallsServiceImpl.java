@@ -72,7 +72,7 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 
 	@Override
 	public List<ServiceCall> getServiceCallsByAddress(int addrId) {
-		return scRepo.findByAddress_id(addrId);
+		return scRepo.findByAddress_Id(addrId);
 	}
 
 }
