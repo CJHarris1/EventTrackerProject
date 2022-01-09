@@ -34,16 +34,16 @@ The backend is set up in a way that CRUD (create, read, update, delete) function
 
 
 ## Technologies Used
-mySQL workbench
-mySQL
-JPA/Hibernate
-RESTful API
-Java
-Spring Boot
-Github
-Gradle
-Postman
-MAMP
+mySQL workbench,
+mySQL,
+JPA/Hibernate,
+RESTful API,
+Java,
+Spring Boot,
+Github,
+Gradle,
+Postman,
+MAMP,
 AWS/EC2
 
 ## Lessons Learned
