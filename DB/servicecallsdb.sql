@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
-  `phone_number` VARCHAR(45) NULL,
+  `phone_number` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -62,19 +62,35 @@ CREATE TABLE IF NOT EXISTS `service_call` (
   `date_scheduled` DATE NOT NULL,
   `time_slot` INT NOT NULL,
   `address_id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
   `active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   INDEX `fk_service_call_address_idx` (`address_id` ASC),
-  INDEX `fk_service_call_customer1_idx` (`customer_id` ASC),
   CONSTRAINT `fk_service_call_address`
     FOREIGN KEY (`address_id`)
     REFERENCES `address` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_service_call_customer1`
-    FOREIGN KEY (`customer_id`)
-    REFERENCES `customer` (`id`)
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `equipment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `equipment` ;
+
+CREATE TABLE IF NOT EXISTS `equipment` (
+  `serial_number` INT NOT NULL,
+  `model_number` VARCHAR(45) NOT NULL,
+  `type` VARCHAR(45) NULL,
+  `fuel_type` VARCHAR(45) NULL,
+  `description` VARCHAR(250) NULL,
+  `address_id` INT NOT NULL,
+  PRIMARY KEY (`serial_number`),
+  UNIQUE INDEX `serial_number_UNIQUE` (`serial_number` ASC),
+  INDEX `fk_equipment_address1_idx` (`address_id` ASC),
+  CONSTRAINT `fk_equipment_address1`
+    FOREIGN KEY (`address_id`)
+    REFERENCES `address` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -95,8 +111,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `servicecallsdb`;
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `phone_number`) VALUES (1, 'John', 'Doe', NULL);
-INSERT INTO `customer` (`id`, `first_name`, `last_name`, `phone_number`) VALUES (2, 'Test', 'Testerson', NULL);
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `phone_number`) VALUES (1, 'John', 'Doe', '1231231111');
+INSERT INTO `customer` (`id`, `first_name`, `last_name`, `phone_number`) VALUES (2, 'Test', 'Testerson', '1231232222');
 
 COMMIT;
 
@@ -117,8 +133,19 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `servicecallsdb`;
-INSERT INTO `service_call` (`id`, `description`, `date_called`, `date_scheduled`, `time_slot`, `address_id`, `customer_id`, `active`) VALUES (1, 'No heat', '2022-01-01', '2022-01-02', 0800, 1, 1, DEFAULT);
-INSERT INTO `service_call` (`id`, `description`, `date_called`, `date_scheduled`, `time_slot`, `address_id`, `customer_id`, `active`) VALUES (2, 'maintenance', '2022-01-01', '2022-01-02', 0930, 2, 2, DEFAULT);
+INSERT INTO `service_call` (`id`, `description`, `date_called`, `date_scheduled`, `time_slot`, `address_id`, `active`) VALUES (1, 'No heat', '2022-01-01', '2022-01-02', 0800, 1, DEFAULT);
+INSERT INTO `service_call` (`id`, `description`, `date_called`, `date_scheduled`, `time_slot`, `address_id`, `active`) VALUES (2, 'maintenance', '2022-01-01', '2022-01-02', 0930, 2, DEFAULT);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `equipment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `servicecallsdb`;
+INSERT INTO `equipment` (`serial_number`, `model_number`, `type`, `fuel_type`, `description`, `address_id`) VALUES (123456789, 'hvac123', 'furnace', 'oil', '75-70b nozzle, inline oil filter', 1);
+INSERT INTO `equipment` (`serial_number`, `model_number`, `type`, `fuel_type`, `description`, `address_id`) VALUES (123123, 'hvac111', 'boiler', 'gas', NULL, 2);
 
 COMMIT;
 
