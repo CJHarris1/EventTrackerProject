@@ -56,16 +56,40 @@ function displayServiceCalls(calls) {
       ul.appendChild(callDiv);
       let serviceCall = document.createElement("ul");
       callDiv.appendChild(serviceCall);
-      let customer = document.createElement("li");
-      let address = document.createElement('li');
-      let callInfo = document.createElement('li');
-      let br = document.createElement("br");
-      customer.textContent = call.address.customer.firstName + " " + call.address.customer.lastName + " Phone: " + call.address.customer.phoneNumber;
-      address.textContent = "Address: " + call.address.address + " " + call.address.city + " " + call.address.stateAbbv;
-      callInfo.textContent = "Description " + call.description + " Date Scheduled: " + call.dateScheduled + " Time Slot: " + call.timeSlot;
+      let customer = document.createElement("ul");
+      let fullName = document.createElement('li');
+      fullName.textContent = call.address.customer.firstName + " " + call.address.customer.lastName;
+      let phone = document.createElement('li');
+      phone.textContent = "Phone: " + call.address.customer.phoneNumber;
       serviceCall.appendChild(customer);
+      customer.appendChild(fullName);
+      customer.appendChild(phone);
+
+      let address = document.createElement('ul');
+      let street = document.createElement('li');
+      let city = document.createElement('li');
+      let state = document.createElement('li');
+      street.textContent = "Address: " + call.address.address;
+      city.textContent = "City: " + " " + call.address.city
+      state.textContent = "State: " + " " + call.address.stateAbbv;
       serviceCall.appendChild(address);
+      address.appendChild(street);
+      address.appendChild(city);
+      address.appendChild(state);
+
+      let callInfo = document.createElement('ul');
+      let desc = document.createElement('li');
+      let date = document.createElement('li');
+      let time = document.createElement('li');
+      desc.textContent = "Description: " + call.description;
+      date.textContent = "Date Scheduled: " + call.dateScheduled;
+      time.textContent = " Time Slot: " + call.timeSlot;
       serviceCall.appendChild(callInfo);
+      callInfo.appendChild(desc);
+      callInfo.appendChild(date);
+      callInfo.appendChild(time);
+      let br = document.createElement("br");
+      
       serviceCall.appendChild(completed);
       serviceCall.appendChild(br);
 
@@ -74,7 +98,7 @@ function displayServiceCalls(calls) {
         e.preventDefault();
         formField.textContent = "";
         customerResults.textContent = "";
-        completeCall();
+        completeCall(call);
       });
     }
   }
@@ -117,8 +141,23 @@ function getActiveCalls() {
 	xhr.send();
 }
 
-function completeCall(){
-  //set boolean to false
+function completeCall(call){
+  console.log(call);
+  let xhr = new XMLHttpRequest();
+  xhr.open("PUT", "api/servicecalls/completed/" + call.id);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200 || xhr.status === 201) {
+        let serviceCall = JSON.parse(xhr.responseText);
+        customerResults.textContent = "Service call has been completed"
+        console.log(serviceCall);
+      } else {
+        console.error("Service Call update failed with status: " + xhr.status);
+      }
+    }
+  };
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.send(JSON.stringify(call));
 }
 
 // this form populates when search customer is clicked
@@ -669,8 +708,3 @@ function displayError(msg) {
   message.textContent = msg;
   customerResults.appendChild(message);
 }
-
-//Would we use status code 201 for PUT requests that were successful?
-//201 usually only for POST.
-// Would we do anything for put?
-// 201 == Created, whereas PUT updates an existing resource, so 200 Ok for PUT is fine.

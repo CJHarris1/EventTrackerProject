@@ -52,6 +52,7 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 		try {
 			call = scRepo.findById(scId).get();
 			call.setActive(false);
+			scRepo.save(call);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("invalid service call id");

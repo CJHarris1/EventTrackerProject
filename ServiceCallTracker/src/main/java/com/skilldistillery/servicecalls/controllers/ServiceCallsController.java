@@ -40,7 +40,7 @@ public class ServiceCallsController {
 		}
 		List<ServiceCall> activeCalls = new ArrayList<>();
 		for (ServiceCall serviceCall : calls) {
-			if(serviceCall.isActive()) {
+			if(serviceCall.isActive()){
 				activeCalls.add(serviceCall);
 			}
 		}
@@ -103,6 +103,7 @@ public class ServiceCallsController {
 		if(sc == null) {
 			res.setStatus(404);
 		}
+		res.setStatus(200);
 		return sc;
 	}
 	
