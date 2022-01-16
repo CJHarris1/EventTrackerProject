@@ -1,5 +1,5 @@
 window.addEventListener("load", function (e) {
-  displayTodaysCalls();
+  getTodaysCalls();
   init();
 });
 
@@ -8,14 +8,14 @@ function init() {
     e.preventDefault();
     formField.textContent = "";
     customerResults.textContent = "";
-    displayTodaysCalls();
+    getTodaysCalls()
   });
 
   activeCallsBtn.addEventListener("click", function (e) {
     e.preventDefault();
     formField.textContent = "";
     customerResults.textContent = "";
-    displayActiveCalls();
+    getActiveCalls()
   });
 
   searchCustomerBtn.addEventListener("click", function (e) {
@@ -33,18 +33,99 @@ function init() {
   });
 }
 
-function displayTodaysCalls() {
-  console.log("test display todays calls");
+function displayServiceCalls(calls) {
+  //grabs customer results div and clears last results
+  let callResults = document.getElementById("customerResults");
+  callResults.textContent = "";
+
+  if (calls.length > 0) {
+    let ul = document.createElement("ul");
+    callResults.textContent = "Service Calls"
+    callResults.appendChild(ul);
+
+    // displays customer name, phone, and address and the call information
+    for (let call of calls) {
+      //finish call button
+      let completed = document.createElement("button");
+      completed.value = "completed";
+      completed.type = "submit";
+      completed.id = "completed";
+      completed.textContent = "complete"
+
+      let callDiv = document.createElement("div");
+      ul.appendChild(callDiv);
+      let serviceCall = document.createElement("ul");
+      callDiv.appendChild(serviceCall);
+      let customer = document.createElement("li");
+      let address = document.createElement('li');
+      let callInfo = document.createElement('li');
+      let br = document.createElement("br");
+      customer.textContent = call.address.customer.firstName + " " + call.address.customer.lastName + " Phone: " + call.address.customer.phoneNumber;
+      address.textContent = "Address: " + call.address.address + " " + call.address.city + " " + call.address.stateAbbv;
+      callInfo.textContent = "Description " + call.description + " Date Scheduled: " + call.dateScheduled + " Time Slot: " + call.timeSlot;
+      serviceCall.appendChild(customer);
+      serviceCall.appendChild(address);
+      serviceCall.appendChild(callInfo);
+      serviceCall.appendChild(completed);
+      serviceCall.appendChild(br);
+
+      // event listener for complete call
+      completed.addEventListener("click", function (e) {
+        e.preventDefault();
+        formField.textContent = "";
+        customerResults.textContent = "";
+        completeCall();
+      });
+    }
+  }
 }
 
-function displayActiveCalls() {
-  console.log("test display active calls");
+function getTodaysCalls(){
+  let today = getTodaysDate();
+  var xhr = new XMLHttpRequest();
+	xhr.open("GET", "api/servicecalls/datescheduled/" + today);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let calls = JSON.parse(xhr.responseText);
+        console.log(calls);
+				displayServiceCalls(calls);
+			}
+			else if (xhr.status === 404) {
+				displayError("No service calls today");
+			}
+		}
+	}
+	xhr.send();
+}
+
+function getActiveCalls() {
+  var xhr = new XMLHttpRequest();
+	xhr.open("GET", "api/servicecalls/active");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let calls = JSON.parse(xhr.responseText);
+        console.log(calls);
+				displayServiceCalls(calls);
+			}
+			else if (xhr.status === 404) {
+				displayError("No active service calls");
+			}
+		}
+	}
+	xhr.send();
+}
+
+function completeCall(){
+  //set boolean to false
 }
 
 // this form populates when search customer is clicked
 function searchCustomerForm() {
   //grab div from index.html
   let searchCustomer = document.getElementById("formField");
+  searchCustomer.textContent = "Search Customer"
 
   //create the form
   let searchCustomerForm = document.createElement("form");
@@ -152,6 +233,7 @@ function getCustomers(fName, lName) {
   }
 }
 
+//shows results of customer search
 function searchCustomerResults(customers) {
   //grabs customer results div and clears last results
   let customerResults = document.getElementById("customerResults");
@@ -183,7 +265,6 @@ function searchCustomerResults(customers) {
       // event listener for see address
       showCustomerAddr.addEventListener("click", function (e) {
         e.preventDefault();
-        console.log("add address evntlsn");
         formField.textContent = "";
         customerResults.textContent = "";
         getAddresses(customer);
@@ -192,6 +273,7 @@ function searchCustomerResults(customers) {
   }
 }
 
+//display customer addresses
 function showCustomerAddresses(addresses) {
   //get the div from index.html
   let customerResults = document.getElementById("customerResults");
@@ -202,7 +284,10 @@ function showCustomerAddresses(addresses) {
   //address ul
   let custAddresses = document.createElement("ul");
   custAddresses.textContent =
-    "Showing addresses for " + addresses[0].customer.firstName + " " + addresses[0].customer.lastName;
+    "Showing addresses for " +
+    addresses[0].customer.firstName +
+    " " +
+    addresses[0].customer.lastName;
   customerResults.appendChild(custAddresses);
 
   //add address button
@@ -218,7 +303,10 @@ function showCustomerAddresses(addresses) {
     e.preventDefault();
     formField.textContent = "";
     customerResults.textContent =
-      "New Address for " + addresses[0].customer.firstName + " " + addresses[0].customer.lastName;
+      "New Address for " +
+      addresses[0].customer.firstName +
+      " " +
+      addresses[0].customer.lastName;
     addAddressForm(addresses[0].customer);
   });
 
@@ -237,49 +325,56 @@ function showCustomerAddresses(addresses) {
     custAddresses.appendChild(city);
     custAddresses.appendChild(state);
 
-    // edit customer address/ add new address/ add service call buttons
-    let editAddress = document.createElement("button");
-    editAddress.id = "editAddress";
-    editAddress.textContent = "Edit Address";
-    custAddresses.appendChild(editAddress);
-    //TODO ADD EVENT LISTENER FOR THIS BUTTON TAKES IN CUST ID AND CALLS ADD ADDRESS
-
+    // add service call button
     let addServiceCall = document.createElement("button");
     addServiceCall.id = "addServiceCall";
     addServiceCall.textContent = "New Service Call";
     custAddresses.appendChild(addServiceCall);
-    //TODO ADD EVENT LISTENER FOR THIS BUTTON
 
-    
+    // event listener for add address
+    addServiceCall.addEventListener("click", function (e) {
+      e.preventDefault();
+      formField.textContent = "";
+      customerResults.textContent =
+        "New Service Call for " +
+        address.customer.firstName +
+        " " +
+        address.customer.lastName +
+        " " + "at "
+        address.address + " " + address.city + " " + address.stateAbbv;
+        newServiceCallForm(address)
+    });
+
     custAddresses.appendChild(br);
   }
 }
 
-function getAddresses(cust){
+//get addresses of a customer
+function getAddresses(cust) {
   var xhr = new XMLHttpRequest();
-	xhr.open("GET", "api/address/customer/" + cust.id);
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				let addresses = JSON.parse(xhr.responseText);
-				showCustomerAddresses(addresses)
-			}
-			else if (xhr.status === 404) {
-				displayError("Address not found");
+  xhr.open("GET", "api/address/customer/" + cust.id);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let addresses = JSON.parse(xhr.responseText);
+        showCustomerAddresses(addresses);
+      } else if (xhr.status === 404) {
+        displayError("Address not found");
         addAddressForm(cust);
-			}
-		}
-	}
-	xhr.send();
+      }
+    }
+  };
+  xhr.send();
 }
 
+//creates new customer form
 function addCustomerForm() {
   //grab div from index.html
   let addCustomer = document.getElementById("formField");
 
   //create the form
   let addCustomerForm = document.createElement("form");
-  addCustomerForm.textContent = "Customer Information";
+  addCustomerForm.textContent = "Add Customer Information";
   let linebreak = document.createElement("br");
   addCustomer.appendChild(addCustomerForm);
   addCustomerForm.appendChild(linebreak);
@@ -346,6 +441,7 @@ function addCustomerForm() {
   });
 }
 
+//creates customer
 function createCustomer(newCustomer) {
   console.log(newCustomer);
   let xhr = new XMLHttpRequest();
@@ -444,13 +540,11 @@ function addAddressForm(customer) {
 
 //recieves the address from the form and creates new address for selected customer
 function createAddress(address, customer) {
-  console.log(address);
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "api/address");
   xhr.onreadystatechange = function () {
     if (xhr.status === 200 || xhr.status === 201) {
       let addr = JSON.parse(xhr.responseText);
-      console.log(addr);
       let displayCust = [customer];
       searchCustomerResults(displayCust);
     } else {
@@ -461,6 +555,112 @@ function createAddress(address, customer) {
   xhr.send(JSON.stringify(address));
 }
 
+//creates new service call form
+function newServiceCallForm(address) {
+  //grab div from index.html
+  formField.textContent = "";
+  let newSCDiv = document.getElementById("formField");
+
+  //create the form
+  let addServiceCallForm = document.createElement("form");
+  addServiceCallForm.textContent = "Add New Service Call";
+  let linebreak = document.createElement("br");
+  newSCDiv.appendChild(addServiceCallForm);
+  addServiceCallForm.appendChild(linebreak);
+
+  //create description input
+  let addDesc = document.createElement("input");
+  addDesc.name = "description";
+  addDesc.type = "text";
+  addDesc.placeholder = "Description";
+  addServiceCallForm.appendChild(addDesc);
+  let br1 = document.createElement("br");
+  addServiceCallForm.appendChild(br1);
+
+  //create date scheduled input
+  let addDateSched = document.createElement("input");
+  addDateSched.name = "sched";
+  addDateSched.type = "text";
+  addDateSched.placeholder = "For YYYY-MM-DD";
+  addServiceCallForm.appendChild(addDateSched);
+  let br2 = document.createElement("br");
+  addServiceCallForm.appendChild(br2);
+
+  //create time input
+  let addTime = document.createElement("input");
+  addTime.name = "time";
+  addTime.type = "text";
+  addTime.placeholder = "Time ex. HHMM";
+  addServiceCallForm.appendChild(addTime);
+  let br3 = document.createElement("br");
+  addServiceCallForm.appendChild(br3);
+
+  //form submit
+  let addServiceCallSubmit = document.createElement("input");
+  addServiceCallSubmit.id = "addServiceCallSubmit";
+  addServiceCallSubmit.type = "submit";
+  addServiceCallSubmit.value = "submit";
+  addServiceCallForm.appendChild(addServiceCallSubmit);
+
+  //submit creates address, displays customer info
+  addServiceCallSubmit.addEventListener("click", function (e) {
+    e.preventDefault();
+    let desc = addServiceCallForm.description.value;
+    let sched = addServiceCallForm.sched.value;
+    let time = addServiceCallForm.time.value;
+    if (sched.length !== 10) {
+      displayError("Please enter a valid date");
+    } else if (time.length !== 4 || isNaN(time)) {
+      displayError("Please enter a valid time");
+    } else {
+      let today = getTodaysDate();
+      let newSC = {
+        description: desc,
+        dateCalled: today,
+        dateScheduled: sched,
+        timeSlot: time,
+        address: address,
+        active: true
+      };
+      createServiceCall(newSC);
+    }
+  });
+}
+
+// creates new service call
+function createServiceCall(serviceCall) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "api/servicecalls");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200 || xhr.status === 201) {
+        let call = JSON.parse(xhr.responseText);
+        console.log(call);
+        console.log(xhr.getResponseHeader("Location"));
+        customerResults.textContent =
+          "New Call has for " +
+          serviceCall.address.customer.firstName +
+          " " +
+          serviceCall.address.customer.lastName +
+          " has been created";
+      } else {
+        console.error("Service call create failed with status: " + xhr.status);
+      }
+    }
+  };
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.send(JSON.stringify(serviceCall));
+}
+
+function getTodaysDate() {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, "0");
+  var mm = String(today.getMonth() + 1).padStart(2, "0");
+  var yyyy = today.getFullYear();
+
+  today = yyyy + "-" + mm + "-" + dd;
+  return today;
+}
 //displays error message
 function displayError(msg) {
   let customerResults = document.getElementById("customerResults");
@@ -469,8 +669,6 @@ function displayError(msg) {
   message.textContent = msg;
   customerResults.appendChild(message);
 }
-
-//https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
 
 //Would we use status code 201 for PUT requests that were successful?
 //201 usually only for POST.

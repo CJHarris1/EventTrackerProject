@@ -1,6 +1,7 @@
 package com.skilldistillery.servicecalls.controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,22 @@ public class ServiceCallsController {
 		if(calls.size() == 0) {
 			res.setStatus(400);
 		}
-		return calls;
+		List<ServiceCall> activeCalls = new ArrayList<>();
+		for (ServiceCall serviceCall : calls) {
+			if(serviceCall.isActive()) {
+				activeCalls.add(serviceCall);
+			}
+		}
+		return activeCalls;
+	}
+	
+	@GetMapping("servicecalls/active")
+	public List<ServiceCall> getActiveServiceCalls(HttpServletResponse res){
+		List<ServiceCall> activeCalls = scService.getActiveServiceCalls();
+		if(activeCalls.size() == 0) {
+			res.setStatus(400);
+		}
+		return activeCalls;
 	}
 	
 	@GetMapping("servicecalls/datecalled/{date}")

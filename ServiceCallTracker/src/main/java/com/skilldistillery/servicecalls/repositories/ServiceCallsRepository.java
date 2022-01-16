@@ -14,4 +14,6 @@ public interface ServiceCallsRepository extends JpaRepository<ServiceCall, Integ
 	List<ServiceCall> findByDateCalled(LocalDate date);
 	
 	List<ServiceCall> findByAddress_Id(int addrId);
+	
+	List<ServiceCall> findByActive(Boolean active);
 }

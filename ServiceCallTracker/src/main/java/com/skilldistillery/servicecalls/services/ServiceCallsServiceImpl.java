@@ -64,4 +64,9 @@ public class ServiceCallsServiceImpl implements ServiceCallsService {
 	public List<ServiceCall> getServiceCallsByAddress(int addrId) {
 		return scRepo.findByAddress_Id(addrId);
 	}
+
+	@Override
+	public List<ServiceCall> getActiveServiceCalls() {
+		return scRepo.findByActive(true);
+	}
 }

@@ -20,4 +20,6 @@ public interface ServiceCallsService {
 	ServiceCall deleteServiceCall(int scId);
 	
 	List<ServiceCall> getServiceCallsByAddress(int addrId);
+	
+	List<ServiceCall> getActiveServiceCalls();
 }
