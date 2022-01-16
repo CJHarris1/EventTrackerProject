@@ -87,4 +87,13 @@ public class CustomerController {
 		}
 		return cust;
 	}
+	
+	@GetMapping("customers/{fName}/{lName}")
+	public List<Customer> getCustomerByFullName(@PathVariable String fName, @PathVariable String lName, HttpServletResponse res){
+		List<Customer> custs = custServ.getCustomerByFullName(fName, lName);
+		if(custs.size() == 0) {
+			res.setStatus(404);
+		}
+		return custs;
+	}
 }

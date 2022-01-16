@@ -18,5 +18,7 @@ public interface CustomerService {
 	
 	Customer getCustomerPhoneNumber(String phoneNumber);
 	
+	List<Customer> getCustomerByFullName(String fName, String lName);
+	
 
 }

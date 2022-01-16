@@ -48,5 +48,10 @@ public class CustomerServiceImpl implements CustomerService{
 		return custRepo.findByPhoneNumber(phoneNumber);
 	}
 
+	@Override
+	public List<Customer> getCustomerByFullName(String fName, String lName) {
+		return custRepo.findByFirstNameAndLastName(fName, lName);
+	}
+
 	
 }
