@@ -1,1 +1,21 @@
-<p>home works!</p>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Scheduled</th>
+        <th>Completed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let call of calls">
+        <td>{{ call.address.customer.firstName }} {{ call.address.customer.lastName }}</td>
+        <td>{{ call.address.address }} {{ call.address.city }}, {{ call.address.stateAbbv }}</td>
+        <td>Time: {{ call.timeSlot }} Date: {{ call.dateScheduled }}</td>
+        <td><button class="btn btn-danger" (click)="completeCall(call)">Complete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

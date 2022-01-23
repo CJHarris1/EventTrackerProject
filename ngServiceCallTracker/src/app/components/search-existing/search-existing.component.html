@@ -1,0 +1,62 @@
+<!-- search customer -->
+<form *ngIf="!selectedCustomer">
+  <input type="text" name="firstName" placeholder="First Name" [(ngModel)]="customer.firstName"> <br>
+  <input type="text" name="lastName" placeholder="Last Name" [(ngModel)]="customer.lastName"> <br>
+  <input type="submit" (click)="searchCustomer(customer)">
+</form>
+
+<!-- customer results -->
+<div *ngIf='!selectedCustomer'>
+  <div *ngIf='showResults'>
+    <table>
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Phone Number</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cust of customers">
+          <td>{{cust.firstName}} {{cust.lastName}}</td>
+          <td >{{cust.phoneNumber}}</td>
+          <td><button class="btn btn-primary" (click)=" getAddresses(cust)">View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- selected customer -->
+<div *ngIf="selectedCustomer">
+  <p>Name: {{selectedCustomer.firstName | titlecase}} {{selectedCustomer.lastName | titlecase}}</p>
+  <p>Phone Number: {{selectedCustomer.phoneNumber }}</p>
+  <p *ngFor="let addr of addresses">Address: {{addr.address}} {{addr.city}}, {{addr.stateAbbv}} <br>
+    <button class="btn btn-primary" (click)='selectedAddress = addr'>Add Service Call</button>
+  </p>
+  <button class="btn btn-success" (click)='showAddressForm = true'> Add New Address</button>
+  <button class="btn btn-primary" (click)="selectedCustomer=null" >Back</button>
+</div> <br><br>
+
+<!-- create new address -->
+<div *ngIf='showAddressForm && selectedCustomer'>
+  <form>
+    <p>New Address for {{selectedCustomer.firstName | titlecase}} {{selectedCustomer.lastName | titlecase}}</p>
+    <input type="text" name="street" placeholder="Street" [(ngModel)]="newAddress.address"> <br>
+    <input type="text" name="city" placeholder="City" [(ngModel)]="newAddress.city"> <br>
+    <input type="text" name="city" placeholder="State Abbreviation" [(ngModel)]="newAddress.stateAbbv" > <br>
+    <input type="submit" (click)="addNewAddress(newAddress)">
+  </form>
+</div>
+
+<!-- create new service call -->
+<div>
+  <div *ngIf='selectedAddress'>
+    <form *ngIf="selectedCustomer">
+      <p>New Service Call for {{selectedCustomer.firstName | titlecase}} {{selectedCustomer.lastName | titlecase}} at {{selectedAddress.address}} {{selectedAddress.city}}, {{selectedAddress.stateAbbv}}</p>
+      <input type="text" name="description" placeholder="Description" [(ngModel)]="serviceCall.description"> <br>
+      <input type="date" name="dateScheduled" placeholder="Date Scheduled" [(ngModel)]="serviceCall.dateScheduled"> <br>
+      <input type="text" name="timeSlot" placeholder="Time Slot" [(ngModel)]="serviceCall.timeSlot"> <br>
+      <input type="submit" (click)="addNewServiceCall(serviceCall)">
+    </form>
+  </div>
+</div>

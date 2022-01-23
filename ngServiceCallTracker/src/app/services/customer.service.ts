@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Customer } from '../models/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,33 @@ import { Injectable } from '@angular/core';
 export class CustomerService {
 
   private baseUrl = 'http://localhost:8083/';
-  private url = 'api/customers';
+  private url = this.baseUrl + 'api/customers';
 
   constructor(private http: HttpClient) { }
+
+  searchFullName(){}
+
+  searchFirstName(){}
+
+  searchLastName(){}
+
+  searchAllCustomers(): Observable<Customer[]>{
+    return this.http.get<Customer[]>(this.url)
+    .pipe(
+      catchError( (error: any) => {
+        console.error(error);
+        return throwError(
+          () => new Error(
+            "CustomerService.searchAllCustomers(): error getting todos" + error
+          )
+        )
+      })
+    );
+  }
+
+
+
+
+
+
 }
