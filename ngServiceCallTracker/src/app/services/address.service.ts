@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Address } from '../models/address';
 
 @Injectable({
@@ -8,8 +9,8 @@ import { Address } from '../models/address';
 })
 export class AddressService {
 
-  private baseUrl = 'http://localhost:8083/';
-  private url = this.baseUrl + 'api/address';
+  // private baseUrl = 'http://localhost:8083/';
+  private url = environment.baseUrl + 'api/address';
 
 
   constructor(private http: HttpClient) { }

@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ServiceCall } from '../models/service-call';
 
 @Injectable({
@@ -9,8 +10,8 @@ import { ServiceCall } from '../models/service-call';
 })
 export class ServiceCallService {
 
-  private baseUrl = 'http://localhost:8083/';
-  private url = this.baseUrl + 'api/servicecalls';
+  // private baseUrl = 'http://localhost:8083/';
+  private url = environment.baseUrl + 'api/servicecalls';
 
   constructor(private datePipe : DatePipe, private http: HttpClient) { }
 
